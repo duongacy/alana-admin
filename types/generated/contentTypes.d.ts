@@ -788,32 +788,71 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiCompanyCompany extends Schema.CollectionType {
-  collectionName: 'companies';
+export interface ApiAlbumAlbum extends Schema.CollectionType {
+  collectionName: 'albums';
   info: {
-    singularName: 'company';
-    pluralName: 'companies';
-    displayName: 'Company';
+    singularName: 'album';
+    pluralName: 'albums';
+    displayName: 'album';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String & Attribute.Required;
-    location: Attribute.String;
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    category: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'api::category.category'
+    >;
+    medias: Attribute.Relation<
+      'api::album.album',
+      'oneToMany',
+      'api::media.media'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::company.company',
+      'api::category.category',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::company.company',
+      'api::category.category',
       'oneToOne',
       'admin::user'
     > &
@@ -821,80 +860,31 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
   };
 }
 
-export interface ApiLibraryLibrary extends Schema.CollectionType {
-  collectionName: 'libraries';
+export interface ApiMediaMedia extends Schema.CollectionType {
+  collectionName: 'medias';
   info: {
-    singularName: 'library';
-    pluralName: 'libraries';
-    displayName: 'Library';
-    description: '';
+    singularName: 'media';
+    pluralName: 'medias';
+    displayName: 'media';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     name: Attribute.String & Attribute.Required;
-    url: Attribute.Text;
+    description: Attribute.Text;
+    content: Attribute.Media & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::library.library',
+      'api::media.media',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::library.library',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProfileProfile extends Schema.SingleType {
-  collectionName: 'profiles';
-  info: {
-    singularName: 'profile';
-    pluralName: 'profiles';
-    displayName: 'Profile';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    projects: Attribute.Component<'profile.project', true>;
-    name: Attribute.String & Attribute.Required;
-    avatar: Attribute.Media & Attribute.Required;
-    role: Attribute.String & Attribute.Required;
-    description: Attribute.Text & Attribute.Required;
-    mail: Attribute.Email & Attribute.Required;
-    github: Attribute.String;
-    experiences: Attribute.Component<'profile.work-experience', true>;
-    certifications: Attribute.Component<'profile.certification', true>;
-    educations: Attribute.Component<'profile.education', true>;
-    communities: Attribute.Component<'profile.community', true>;
-    skills: Attribute.Component<'profile.skill', true>;
-    phone: Attribute.String & Attribute.Required;
-    libraries: Attribute.Relation<
-      'api::profile.profile',
-      'oneToMany',
-      'api::library.library'
-    >;
-    techstack: Attribute.JSON & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::profile.profile',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::profile.profile',
+      'api::media.media',
       'oneToOne',
       'admin::user'
     > &
@@ -920,9 +910,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::company.company': ApiCompanyCompany;
-      'api::library.library': ApiLibraryLibrary;
-      'api::profile.profile': ApiProfileProfile;
+      'api::album.album': ApiAlbumAlbum;
+      'api::category.category': ApiCategoryCategory;
+      'api::media.media': ApiMediaMedia;
     }
   }
 }
