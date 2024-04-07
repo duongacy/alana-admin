@@ -1,0 +1,91 @@
+{
+  "kind": "singleType",
+  "collectionName": "profiles",
+  "info": {
+    "singularName": "profile",
+    "pluralName": "profiles",
+    "displayName": "Profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "projects": {
+      "displayName": "Project",
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.project"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "mail": {
+      "type": "email",
+      "required": true
+    },
+    "github": {
+      "type": "string"
+    },
+    "experiences": {
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.work-experience"
+    },
+    "certifications": {
+      "displayName": "Certification",
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.certification"
+    },
+    "educations": {
+      "displayName": "Education",
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.education"
+    },
+    "communities": {
+      "displayName": "Community",
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.community"
+    },
+    "skills": {
+      "displayName": "Skill",
+      "type": "component",
+      "repeatable": true,
+      "component": "profile.skill"
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "libraries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::library.library"
+    },
+    "techstack": {
+      "type": "json",
+      "required": true
+    }
+  }
+}
