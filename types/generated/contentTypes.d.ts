@@ -806,6 +806,7 @@ export interface ApiAlbumAlbum extends Schema.CollectionType {
       'oneToOne',
       'api::category.category'
     >;
+    thumb: Attribute.Media & Attribute.Required;
     medias: Attribute.Relation<
       'api::album.album',
       'oneToMany',

@@ -22,6 +22,15 @@
       "relation": "oneToOne",
       "target": "api::category.category"
     },
+    "thumb": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
     "medias": {
       "type": "relation",
       "relation": "oneToMany",
