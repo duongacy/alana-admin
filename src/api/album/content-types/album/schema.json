@@ -31,10 +31,14 @@
         "videos"
       ]
     },
-    "medias": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::media.media"
+    "media": {
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": true,
+      "required": true
     }
   }
 }
